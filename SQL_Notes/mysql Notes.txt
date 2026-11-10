@@ -1,0 +1,755 @@
+MySql => Database
+
+Database => Collection of Data is called Database
+----------
+
+There are two types of Databases :-
+-----------------------------------
+1. Relational Database (RDBMS) :- It is  used to store data in tabular form(in the form of rows and columns)
+ex:- SQL , Mysql , MariaDB , PostgreSQL , etc...
+
+2. Non-Relational Database :- It stores data in the form of object(it key and value pair)
+ex:- MongoDB
+Ex:- products_data = {
+                       {Product_id:1 , product_name:Book,product_price:199},
+                       {Product_id:2 , product_name:pen,product_price:19},
+                       {Product_id:3 , product_name:Notebook,product_price:89}
+                    }
+
+-------------------------------------------------------------------------------------------------------------
+Mysql is a relational database which stores data in the form of table(rows and columns)
+Mysql follows SQL(Structured Query language)
+It is developed by :- Michael "Monty" Widenius in 1995 23rd may.
+NOTE :- Mysql port number is : 3306
+
+=> we have to install mysql and its workbench
+we follow these - CRUD operations 
+C => create 
+R => Read
+U => Update
+D => Delete
+
+--------------------------------------------------------------------------------------------------------------
+databases ====> tables ======>insert records( rows and columns)
+---------------------------------------------------------
+To get list of all databases :- SHOW DATABASES; 
+
+=> step1 :- create a Database.
+CREATE DATABASE dataBaseName ;
+ex:- CREATE DATABASE users;
+
+=> step2 :- switch/SELECT into a particular database 
+USE databaseName;
+
+=> step3 :- create a tables
+syntax:-
+---------
+CREATE TABLE tableName(
+    columnName1 dataType constraint,
+    columnName2 dataType constraint,
+    columnName3 dataType constraint
+);
+
+* columnName :- Name of the Column 
+ex:- Id , Name , Age , Address , etc..
+
+* dataType :- column value data type
+ex:- int  , float , char , varchar , bool , enum , etc...
+
+* constraint(optional) :- It is a restriction on column.
+ex:- NOT NULL , UNIQUE , DEFAULT , etc..
+
+step3 :- Get all inserted records
+SELECT * FROM tableName;
+
+To delete any database :-   DROP DATABASE databaseName;
+-------------------------
+
+====================================================== MySQL Data types ===================================================
+1 Numeric data types
+2 String/Character Data types
+3 Date and Time Data types
+4 Collection data types
+===========================================================================================================================
+* Integer data types :- It contains Whole numbers (-ve and +ve numbers) without any decimal point
+ex:- 7483 , -3278
+
+* Floating data Types :- Number with decimal part.
+ex:- 38.47 , -532.43
+
+marks tinyint => 210 
+
+--------------------------------------------------
+tinyint => -128 to 127
+smallint => -32768 to 32767
+mediumint => -8,388,608 to 8,388,607
+int/integer => -2,147,483,648 to 2,147,483,647
+bigint => -2⁶³ to 2⁶³−1 
+
+ 
+-634734 => signed number
+6327843 => unsigned number
+
+NOTE :- if we want to store PHONE NUMBER then we have to use VARCHAR data type Instead of int or bigint because it removes starting zeros from Phone number
+ex:- Phone bigint ===> ex:- 088903896483 ====> 88903896483  X
+ex:- Phone varchar(20) ===> ex:- "088903896483" ====> "088903896483" Valid
+
+
+---------------------------------------------------
+Percentage decimal(100,3) => 78.463
+Tax double => 
+--------------------------------------------------------------------------------------------
+name char(10) => "Raman    " => Fixed-length (0–255) 
+name varchar(10) => "Raman" => Variable-length (0–65535)
+
+1bit => 1character
+1byte=> 8bits => 8 chracters
+
+=> ex for enum data type :- To choose one from different options
+Gender enum("Male","Female","Other")
+
+=> ex for SET data type :- To choose Multiple values from given option list
+Subjects SET("math","science","computer","Art","History","English") ===> 
+
+----------------------------------------------------------------------------------------------
+=> DOB DATE ==> yyyy-mm-dd => 2001-02-15 (15 feb,2001)
+=> Purchase_time TIME ==> hh:mm:ss
+=> Purchase DATETIME => YYYY-MM-DD HH:MM:SS => 2026-05-25 10:25:55
+=> passing_year YEAR => YYYY => 2023
+
+======================================= insert records into table =====================================
+step1 :- select your database :- USE databaseName;
+step2 :- Create a table(if Not Exists)
+step3 :- Insert records
+
+CREATE TABLE tableName(
+    columnName1 dataType constraint,
+    columnName2 dataType constraint,
+    columnName3 dataType constraint,
+    columnName4 dataType constraint,
+    columnName5 dataType constraint
+);
+
+* This command is used to define the structure of the table.
+=> DESCRIBE tableName;
+
+INSERT INTO tableName(columnName1,columnName2,....)
+VALUES 
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....),
+(value1,value2,....);
+
+Comment :- To make something not running.
+syntax:- 
+---------
+-- comment 
+
+To get Records From Table 
+---------------------------
+SELECT * FROM tableName;     
+or
+SELECT columnName1,columnName2,.. FROM tableName;
+or 
+SELECT * FROM tableName WHERE condition;
+
+=============================== Constraints in MySQL ========================================
+=> These are the restrictions which apply on particular column.
+
+SYNTAX:- columnName dataType CONSTRAINTs
+
+1. NOT NULL :- It is used to make a column Not Empty
+.......................................................................................
+2. UNIQUE :- it ensures that every column Name should be unique.
+.......................................................................................
+3. AUTO_INCREMENT :- It automatically assign value to that column.
+NOTE :- This column must be Primary Key
+.......................................................................................
+4. CHECK condition :- It is used to apply custom condition on any column.
+ex:- marks int CHECK marks>0
+.......................................................................................
+5. DEFAULT value :- used to provide a default value to any column, it assign a default value if user does not pass any value
+ex:- city varchar(100) DEFAULT "Mathura"
+.......................................................................................
+6. PRIMARY KEY :- It apply two constraints on a column it make sure that particular column should be "unique" and can not be "Empty(NOT NULL)" 
+NOTE :- Every table can have Only ONE Primary Key.
+.......................................................................................
+7. FOREIGN KEY :- it is used to create a link between two tables.
+NOTE :- It create a link on "Primary Key" Column of another table. 
+This mechanism enforces "referential integrity"
+
+syntax:-
+---------
+create table table1Name(
+    id int Primary key AUTO_INCREMENT,
+    name varchar(200),
+    age tinyint
+);
+
+create table table2Name(
+    Roll_Number int Primary key AUTO_INCREMENT,
+    id int NOT NULL UNIQUE,
+    Section varchar(20),
+    Address varchar(200)
+
+    FOREIGN KEY id REFRENCES table1Name(id)
+);
+
+
+==================================================== operators in mysql =================================================
+Operators are some special symbols used to perform some specific task/operation.
+
+1. Arithematic operators :-
+-----------------------------
++ (addition)
+- (substraction)
+* (multiplication)
+/ (division)
+% (Modulas) => Used to find Remainder
+ex:- 15%2 => 1
+ex :- 30%4 => 2
+
+2. Relational/Comparision operators :- It is used to "compare two values" return true(1) or false(0).
+--------------------------------------
+> (greater than)
+< (lessthan)
+>= (greater than OR equal to)
+<= (lessthan  OR equal to)
+<> OR != (Not equal To)   <>
+= (IsEqual To )
+
+ex:- 18>7 => true
+ex:- 18<7 => false
+ex:- 18<>7 => true OR 18!=7 => True
+ex:- 10 = 10 => true
+ex:- 10>=6 => true
+ex:- 10>=10 => true
+
+3. Logical operators :- These operators are used to "compare two Conditions" return true(1) or false(0).
+-----------------------
+=> AND (logical and) :- return true if both conditions are true , return false if either one condition is false.
+syntax:- (condition1)AND(condition2)
+
+ex:- (10>5)AND(10>20) ===> false
+ex:- (10<5)AND(10<20) ===> false
+ex:- (10>5)AND(10<20) ===> true
+
+=> OR (logical or) :- return true if either one condition is true , return false if both conditions are false.
+syntax:- (condition1) OR (condition2)
+
+ex:- (10<5)OR(10<20) ===> true
+ex:- (10>5)OR(10>20) ===> true
+ex:- (10>5)OR(10<20) ===> true
+ex:- (10<5)OR(10>20) ===> false
+
+=> NOT (logical not) :- it reverse the condition, true ---> false , false ----> true
+syntax:- NOT(condition)
+
+ex:- NOT(10>5)===> false
+ex:- NOT(10<5)===> true
+
+4. Between :- It is used to retrieve(get/fetch) data in a range(starting and ending values)
+syntax :- select columnName1 , columnName2 ,.. FROM tableName WHERE columnName BETWEEN startValue AND endValue ;
+ex:- SELECT * FROM bank_transactions WHERE transaction_id BETWEEN 10 AND 30;
+
+5. LIKE :- Used to filter/search records according to given pattern with LIKE operators.
+Here we use Two symbols(wildcard characters) with like operator:-
+-------------------------------------------
+% :- used to fetch zero or more characters.
+_ :- used to fetch single character only.
+
+Syntax:- SELECT * FROM tableName WHERE columnName LIKE "pattern";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+NOTE :- It does not follow ASCII Code.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EX:-
+----
+SELECT * FROM employees WHERE name LIKE "R__"; ==> return those employees records where name starts with R and followed by two characters.
+SELECT * FROM employees WHERE name LIKE "R%"; ==> return those employees records where name starts with R and followed by more than one characters.
+SELECT * FROM employees WHERE name LIKE "%n"; ==> return those employees records where name ends with n .
+SELECT * FROM employees WHERE name LIKE "A%n"; ==> return those employees records where name starts with A and ends with n.
+
+6. IN , NOT IN :- The IN operator filters your query to return only rows where a column's value matches any item in the provided list
+
+ex:- SELECT * FROM employees WHERE city IN ("Delhi","Mumbai","Chennai"); -- select all records where city belongs to Delhi , Mumbai and Chennai
+SELECT * FROM employees WHERE city NOT IN ("Delhi","Mumbai","Chennai"); -- select all records except city belongs to Delhi , Mumbai and Chennai
+
+==================================== ORDER BY clause in mysql ===========================================
+To fectch records from database in accending OR decending Order.
+
+syntax:-
+----------
+accending order :
+------------------
+SELECT * FROM tableName ORDER BY columnName; ====> Return all records In accending Order (By default)
+SELECT * FROM tableName ORDER BY columnName ASC; ====> Return all records In accending Order
+
+decending order :-
+-------------------
+SELECT * FROM tableName ORDER BY columnName DESC; ====> Return all records In DECENDING Order
+
+
+============================== UPDATE records in Table =================================
+NOTE :- Before Update we have to apply this command 
+-------
+------------------------------------
+SET SQL_SAFE_UPDATES = 0;
+------------------------------------
+This will Allow updates in table.
+
+SYNTAX:-
+---------
+UPDATE tableName
+SET columnName = value WHERE condition;
+
+NOTE :- If WHERE clause is Not Mensioned Then This will update entire table Records.
+
+ex:-
+-----
+NOTE :- Set marks 80 for each student.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+UPDATE students 
+SET marks = 80;
+
+=> Update marks for roll_number 15
+------------------------------------
+UPDATE students
+SET marks = 80 WHERE roll_number = 15;
+
+=> Update marks for roll_number 10 and also name will be Ram
+--------------------------------------------------------------
+UPDATE students
+SET marks = 80 WHERE name = "ram" AND roll_number = 10;
+
+
+================ ROLLBACK ========================
+This command is used to Undo changes in a table 
+
+-- 1. Start the transaction
+START TRANSACTION;
+
+-- 2. Run your update or delete queries
+UPDATE users SET status = 'active';
+
+-- 3. Realise there is a mistake, and undo everything
+ROLLBACK;
+
+================= COMMIT ==========================
+This will forcefully saved records , so we can not ROLLBACK after COMMIT
+
+UPDATE users SET status = 'active';
+COMMIT;
+
+=======================================================================================================
+====================================== ALTER TABLE ====================================================
+This command is used to change the structure of the table.
+
+
+using ALTER command We can :-
+-----------------------------
+=> ADD new column into the table.
+=> DELETE the column
+=> RENAME the table
+=> CHANGE column Name
+=> MODIFY column :- change data type , change constraint .
+
+SYNTAX:-
+--------
+ALTER TABLE tableName
+actionName 
+WHERE condition;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Columns (Add, Drop, Modify)
+--------------------------------
+* Add a new column:
+--------------------
+ALTER TABLE tableName ADD columnName dataType Constraint;
+OR
+ALTER TABLE tableName ADD columnName dataType Constraint AFTER columnName;
+
+* Drop(delete) any column
+--------------------------
+ALTER TABLE tableName DROP columnName;
+
+* Modify column 
+----------------
+ALTER TABLE tableName MODIFY COLUMN columnName dataTYPE Constraint ;
+
+
+=> To rename a column 
+-----------------------
+ALTER TABLE tableName
+RENAME COLUMN old_columnName TO new_columnName;
+
+=> To rename Table
+-----------------------
+RENAME TABLE OLD_tableName TO new_tableName;
+ 
+
+=> To remove Specific Record from table 
+----------------------------------------
+DELETE FROM tableName WHERE condition ;
+
+ex:- DELETE FROM students WHERE Roll_Number = 2;
+
+
+=> TRUNCATE TABLE tableName => This command is used to remove all records from table BUT structure remains same.
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+* switch-case statements 
+
+
+------------------------------------------------ HOME WORK ----------------------------------------------------------------
+1. Employee Salary Analysis
+-----------------------------
+You are given an employees table containing employee details such as employee ID, name, department, salary, and hire date. 
+Write a query to find all employees who earn more than ₹50,000 and belong to the Sales department. 
+Display their names and salaries sorted by salary in descending order.
+
+2. Customer Registration Report
+--------------------------------
+A company wants to know how many customers registered during the current year. 
+Write a query that returns the total number of customers who registered after January 1st of the current year.
+
+3. Product Inventory Check
+--------------------------------
+An inventory table stores product information, including product name, category, and quantity in stock. 
+Write a query to find all products whose stock quantity is below 10 units and display them in alphabetical order.
+
+4. Student Performance Report
+---------------------------------
+A school database contains student records with marks obtained in examinations. 
+Write a query to retrieve students who scored more than 80 marks in Mathematics and less than 60 marks in Science.
+
+5. Order Tracking
+--------------------
+An online shopping platform stores customer orders. 
+Write a query to find all orders placed in the last 30 days and display order ID, customer ID, and order date.
+
+
+=============================================== MySQL Functions =====================================================
+These are built-in functions in mysql for different kinds of works.
+
+There are 4 categories of functions :-
+--------------------------------------
+1. Aggregated functions :- These are grouped functions which helps to provide functionality of many number of Rows from table.
+2. String Functions :- These functions are used with string data types.
+3. Numeric/Maths Functions :- These are used to perform Mathematical operations.
+4. Date and Time functions :- These are used to work with date and time.
+
+NOTE :- These functions are used with SELECT query.
+SYNTAX :- SELECT functionName();
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Aggregated Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=> count(columnName/*) :- return count 
+=> SUM(columnName) :- return sum of all reords from column
+=> AVG(columnName) :- return average on particular column
+=> MIN(columnName) :- return minimum value from a column
+=> MAX(columnName) :- return maximum value from a column
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ String Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=> LENGTH("String value") :- It is used to find the length of the string in bytes.
+=> CHAR_LENGTH("String value") :- It is used to find the length of the string in CHARACTERS.
+=> UPPER()
+=> LOWER()
+=> LTRIM()
+=> RTRIM()
+=> TRIM()
+=> LPAD()
+=> RPAD()
+=> REVERSE()
+=> REPLACE()
+=> REPEAT()
+=> ASCII()
+
+
+=====================================================================================================================
+JOINS :- It is a combination of two or more tables using common column(Primary Key) in between them.
+--------
+
+studentID , studentName , StudentCourse , studentCourseID , studentAddress
+
+1st table :-
+-------------
+studentID , studentName , studentAddress
+
+2nd table :-
+--------------
+studentID , StudentCourse , studentCourseID
+
+left table 
+right table
+
+=> INNER JOIN
+=> LEFT JOIN
+=> RIGHT JOIN 
+=> CROSS JOIN 
+=> SELF JOIN 
+
+SYNTAX:-
+----------
+SELECT columnNames 
+FROM leftTable
+JOIN TYPE rightTable
+ON leftTable.column  = rightTable.column ;
+
+----------------------------------------------
+=> Data redundancy :- Duplication of data.
+* Use Normalization to reduce data redundancy
+
+=> Data incosistency :- Same information exists in different places with different Formats.
+* Use Constraints to reduce data incosistency
+-----------------------------------------------
+
+* Data REDUNDENCY => Duplication Of Data OR same information exists in different places in a table.
+
+* NORMALIZATION (NF=> Normal Form) :- it is used to reduce data redundancy.
+-------------------------------------
+It creates small tables from a big table.
+   => 1NF :- Every column in a table should have Atomic Value(every column have single value).
+   => 2NF :- For 2NF , table should be in 1NF , It is called 2NF if there is "No Partial Dependency".
+             Every Non-key Attribute(column) must be depend on Key Attribute.
+   => 3NF :- For 3NF , table should be in 2NF ,It is called 3NF if there is "No Transitive Dependency".
+             non-key attributes should not depend on other non-key attributes.
+   => BCNF :- Stricter Form of 3NF, LHS of every functional dependency must be a super key or candidate key
+
+Functional Dependency :- x --> y
+Here X is depends on Y
+-----------------------------------
+* KEYS IN MySQL
+    => Primary key => unique + Not Null
+    => FOREIGN key => to link two table
+    => candidate key => Unique
+    => composite key => Combination of more than two candidate keys.
+=====================================================================================================================
+studentId(Single valued Attribute)   Name   Aadhar Number    Course (Multi valued Attribute)
+-----------------------------------------------------------------------------------------------
+1                                   Ram         10101          Python,Java
+2                                   Karan       10102           Python
+3                                   Suman       10103           Mysql,Excel
+
+COURSE 
+```````
+studentId , Course
+-------------------
+1           Python
+1           Java
+2           Python
+3           Mysql
+3           Excel
+
+Student
+````````
+studentId , Name
+-------------------
+1           Ram
+2           karan
+3           Suman
+
+Aadhar
+```````
+Name    Aadhar Number    
+----------------------
+Ram      10101     
+Karan    10102        
+Suman    10103   
+
+
+2NF 
+------
+studentId , Name    Course
+----------------------------
+1           Ram     Python
+1           Ram     Java
+2           Karan   Python
+3           Suman   Mysql
+3           Suman   Excel
+
+
+studentId , AadharNumber
+-------------------
+1           10101
+2           10102
+3           10103
+
+================================================== case statement in MySQL ======================================================
+
+SELECT columnNames,
+CASE
+    WHEN condition1 THEN statement
+    WHEN condition2 THEN statement
+    WHEN condition3 THEN statement
+    .....
+    ELSE statement
+END AS "case_column_name"
+
+FROM tableName;
+
+---------------------------------------------------------------------------
+NOTE :- ELSE statement will run when there is no condition satisfied.
+---------------------------------------------------------------------------
+
+===================================================== GROUP IN MySQL ============================================================
+=> it is used to group multiple columns in a table with Aggregated functions(COUNT , SUM , AVG , MIN , MAX).
+
+NOTE :- If any column used with select command is Non-Aggregated(varchar or date) should also include with GROUP BY.
+
+SELECT columnNames , AggregatedFunction(columnName)
+FROM tableName
+WHERE condition
+GROUP BY columnName 
+HAVING condition;
+
+
+example :-
+----------
+SELECT category, SUM(quantity) AS total_units, SUM(total_amount) AS total_revenue,max(total_amount)
+FROM sales_data
+GROUP BY category;
+
+OR
+
+SELECT store_location,category,sum(quantity) AS "Total Items" ,SUM(total_amount) AS "Total Revenue",max(total_amount)
+from sales_data
+GROUP BY store_location,category
+HAVING sum(quantity)>3;
+
+======================================================= home work ===============================================================
+1. Retrieve Employees by Department
+
+You have an employees table with columns:
+
+emp_id, emp_name, department, salary
+Write a query to display all employees who work in the "Sales" department and earn more than 50,000.
+
+---------------------------------------------------------------------------------------------------------
+
+2. Find the Second Highest Salary
+Using the employees table, write a query to find the employee(s) with the second highest salary.
+
+---------------------------------------------------------------------------------------------------------
+
+3. Top 5 Best-Selling Products
+
+Tables:
+
+products(product_id, product_name)
+orders(order_id, product_id, quantity)
+Write a query to display the top 5 products based on total quantity sold.
+
+---------------------------------------------------------------------------------------------------------
+
+4. Customers Without Orders
+
+Tables:
+
+customers(customer_id, customer_name)
+orders(order_id, customer_id)
+Write a query to find customers who have never placed an order.
+
+---------------------------------------------------------------------------------------------------------
+
+5. Monthly Sales Report
+
+Table:
+
+orders(order_id, order_date, total_amount)
+Write a query to calculate the total sales for each month in the current year.
+
+---------------------------------------------------------------------------------------------------------
+
+6. Duplicate Email Detection
+
+Table:
+
+users(user_id, name, email)
+Write a query to find all email addresses that appear more than once.
+
+---------------------------------------------------------------------------------------------------------
+
+7. Highest Paid Employee in Each Department
+
+Table:
+
+employees(emp_id, emp_name, department, salary)
+Write a query to display the highest-paid employee from each department.
+
+---------------------------------------------------------------------------------------------------------
+
+8. Update Product Prices
+
+Table:
+
+products(product_id, product_name, price, category)
+Increase the price of all products in the "Electronics" category by 10%.
+
+---------------------------------------------------------------------------------------------------------
+
+9. Delete Inactive Users
+
+Table:
+
+users(user_id, last_login)
+Delete users who have not logged in for the past 365 days.
+
+---------------------------------------------------------------------------------------------------------
+
+10. Create a Student Grade Report
+
+Tables :
+........
+students(student_id, student_name)
+marks(student_id, subject, marks)
+Write a query to display:
+Student name
+Total marks
+Average marks
+Grade based on:
+A: Average ≥ 90
+B: Average 75–89
+C: Average 60–74
+D: Average < 60
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+These questions cover key MySQL concepts including :
+.....................................................
+=> SELECT, WHERE, ORDER BY
+=> Aggregate functions (SUM, AVG, COUNT, MAX)
+=> GROUP BY and HAVING
+=> JOINs
+=> Subqueries
+=> Common update and delete operations
+=> Date functions
+=> Conditional logic using CASE
+=> Ranking and top-N queries
+=================================================================================================================================
+
+
+
+
+
+
+
+
+
+github :- Online 
+git :- localPC => version(updates) control system 
+
+------------ Git steps without cloning ------------------------
+git init
+git add .
+git commit -m "message"
+git remote add origin URL
+git branch -M main
+git pull origin main --rebase
+git push -u origin main
+
+NOTE :- Before Push we have to PULL data.
+---------------------------------------------------------------
